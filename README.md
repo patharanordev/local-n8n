@@ -1,4 +1,4 @@
-# n8n on Windows OS + Self-Certificate
+# n8n + Self-Certificate
 
 ## Prerequisites
 
@@ -24,7 +24,12 @@ SSL_EMAIL=your@mail.com
 
 ### Set local domain name to `hosts` file
 
-Go to `C:\Windows\System32\drivers\etc` and open `hosts` file with **Run as Administrator** then add:
+Set host name on local machine:
+
+- For Windows OS — Go to `C:\Windows\System32\drivers\etc` and open `hosts` file with **Run as Administrator**.
+- For Linux/mac OS — Open file `hosts` by `sudo nano /etc/hosts`.
+
+then add:
 
 ```txt
 127.0.0.1   n8n.localhost
@@ -34,15 +39,39 @@ Don't forget save it.
 
 ### Install `mkcert`
 
-Open PowerShell with **Run as Administrator** then install `mkcert`:
+- Windows OS:
 
-```ps1
-choco install mkcert
-```
+    Open PowerShell with **Run as Administrator** then install `mkcert`:
+
+    ```ps1
+    choco install mkcert
+    ```
+
+- Linux OS:
+
+    Install `brew` on Linux:
+
+    ```sh
+    sudo apt install libnss3-tools
+    ```
+
+    then install `mkcert`:
+
+    ```sh
+    brew install mkcert
+    ```
+
+- macOS:
+
+    Using `brew` install `mkcert`:
+
+    ```sh
+    brew install mkcert
+    ```
 
 Go to you project, I assume you download this repository into `./workspace`, let's create self-certificate:
 
-```ps1
+```sh
 # In ./workspace directory
 mkcert -cert-file certs/localhost.crt -key-file certs/localhost.key n8n.localhost
 ```
