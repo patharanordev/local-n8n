@@ -72,7 +72,7 @@ Don't forget save it.
 Go to you project, I assume you download this repository into `./workspace`, let's create self-certificate:
 
 ```sh
-# In ./workspace directory
+# At root of project's directory
 mkcert -cert-file certs/localhost.crt -key-file certs/localhost.key n8n.localhost
 ```
 
@@ -90,6 +90,8 @@ You will see final directory structure look like this:
 
 ## Usage
 
+### PowerShell
+
 Stop all services if it's running:
 
 ```ps1
@@ -101,6 +103,22 @@ Start all services:
 ```ps1
 docker compose -f .\docker-compose.yml up --build
 ```
+
+### Linux/macOS with Podman
+
+```sh
+podman compose -f .\docker-compose.podman.yml down -v
+```
+
+Start all services:
+
+```sh
+podman compose -f .\docker-compose.podman.yml up --build
+```
+
+or using `stop.sh` and `start.sh`, the scripts will creating container network name `localnet`. You can use it to communicate with other services via the network.
+
+### Run
 
 Access via your browser `https://n8n.localhost:55443/`.
 
