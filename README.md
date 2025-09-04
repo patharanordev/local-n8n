@@ -106,6 +106,41 @@ docker compose -f .\docker-compose.yml up --build
 
 ### Linux/macOS with Podman
 
+> ---
+> **For non-rootful**
+>
+> Please check user id first:
+>
+> ```sh
+> echo /run/user/$(id -u)/podman/podman.sock
+> 
+> # ex. output:
+> # echo /run/user/YOUR_USER_ID/podman/podman.sock
+> ```
+>
+> then update Traefik's volume in `docker-compose.podman.yml`:
+>
+> ```yml
+> services:
+>   traefik:
+>     image: "traefik"
+>     restart: always
+>     command:
+>       # ...
+>     ports:
+>       - "55580:80"
+>       - "55443:443"
+>     volumes:
+>       # ...
+>       - /run/user/YOUR_USER_ID/podman/podman.sock:/var/run/docker.sock:ro,Z
+> 
+>   # ...
+> ```
+>
+> now it ready to use...
+>
+> ---
+
 ```sh
 podman compose -f .\docker-compose.podman.yml down -v
 ```

@@ -23,9 +23,14 @@ services:
       - "55580:80"
       - "55443:443"
     volumes:
-      - /run/podman/podman.sock:/var/run/docker.sock:ro,Z
       - ./certs:/certs
       - ./traefik_dynamic.yml:/traefik_dynamic.yml
+      # For non-rootful, please check user id first: 
+      # $echo /run/user/$(id -u)/podman/podman.sock 
+      #
+      - /run/user/YOUR_USER_ID/podman/podman.sock:/var/run/docker.sock:ro,Z
+      # For non-rootful
+      # - /run/podman/podman.sock:/var/run/docker.sock:ro,Z
     networks:
       - localnet
     privileged: true
